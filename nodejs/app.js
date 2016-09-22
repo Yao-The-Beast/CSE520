@@ -35,6 +35,28 @@ function parseJSON( input ) {
 	}
 }
 
+function mongodbHandler(msgContent){
+	var MongoClient = require('mongodb').MongoClient;
+	// Connect to the db
+	MongoClient.connect("mongodb://localhost:27017/admin", function(err, db) {
+		if(err) { 
+			return console.dir(err); 
+		}
+		db.data.insert(
+			{
+				type: "temperature",
+				msg: msgContent,
+			}
+		);
+
+	});
+}
+
+function storeMsg(data){
+	msg = data.Message;
+	
+}
+
 function handleIncomingMessage( msgType, msgData ) {
 	if( msgType === 'SubscriptionConfirmation') {
 		console.log("Confirm Subscription");
@@ -44,12 +66,12 @@ function handleIncomingMessage( msgType, msgData ) {
 		}, onAwsResponse );
 
 	} else if( msgType === 'Notification' ) {
-    	//console.log(msgData);
-		console.log(msgData.Message)
+    	storeMsg(msgData);
 	} else {
 		console.log( 'Unexpected message type ' + msgType );
 	}
 }
+
 
 function createHttpServer() {
 	var server = new http.Server();
