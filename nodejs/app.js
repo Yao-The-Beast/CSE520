@@ -9,10 +9,6 @@ var http = require( 'http' );
 //     "region": "us-west-2"
 // });
 
-AWS.config.update({
-	"region": "us-west-2"
-});
-
 var sns = new AWS.SNS();
 
 parseAWSConfig();
@@ -25,10 +21,12 @@ function parseAWSConfig(){
 	var configuration = JSON.parse(fs.readFileSync('credential.json', 'utf8'));
 
 	var data = configuration.Credentials;
+	data.region = "us-west-2";
 	AWS.config.update({
 		"secretAccessKey": data.SecretAccessKey,
 		"sessionToken": data.SessionToken,
 		"accessKeyId": data.AccessKeyId,
+		"region": data.region
 	});
 	console.log(AWS.config);
 }
