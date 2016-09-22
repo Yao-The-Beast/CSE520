@@ -16,14 +16,14 @@ createHttpServer();
 
 
 function parseAWSConfig(){
-	var config = require('./credential.json');
-	var data = config.Credentials;
+	var configuration = require('./credential.json');
+	var data = configuration.Credentials;
 	AWS.config.update({
 		"secretAccessKey": data.SecretAccessKey,
 		"sessionToken": data.SessionToken,
 		"accessKeyId": data.AccessKeyId,
-		"region": "us-west-2"
-	})
+		"region": "us-west-2",
+	});
 }
 
 
