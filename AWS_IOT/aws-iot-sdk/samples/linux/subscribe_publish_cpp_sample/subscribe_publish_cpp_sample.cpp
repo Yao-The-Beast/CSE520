@@ -203,17 +203,13 @@ int main(int argc, char **argv) {
 	}
 
 	IOT_INFO("Subscribing...");
-	rc = aws_iot_mqtt_subscribe(&client, "sdkTest/sub", 11, QOS0, iot_subscribe_callback_handler, NULL);
+	rc = aws_iot_mqtt_subscribe(&client, "MongodbTest", 11, QOS0, iot_subscribe_callback_handler, NULL);
 	if(SUCCESS != rc) {
 		IOT_ERROR("Error subscribing : %d ", rc);
 		return rc;
 	}
 
-	sprintf(cPayload, "%s : %d ", "hello from SDK", i);
-
-	paramsQOS0.qos = QOS0;
-	paramsQOS0.payload = (void *) cPayload;
-	paramsQOS0.isRetained = 0;
+	sprintf(cPayload, "%s : %d ", "hello from Mac", i);
 
 	paramsQOS1.qos = QOS1;
 	paramsQOS1.payload = (void *) cPayload;
@@ -235,22 +231,14 @@ int main(int argc, char **argv) {
 			continue;
 		}
 
-		IOT_INFO("-->sleep");
-		sleep(1);
-		sprintf(cPayload, "%s : %d ", "hello from SDK QOS0", i++);
-		paramsQOS0.payloadLen = strlen(cPayload);
-		rc = aws_iot_mqtt_publish(&client, "sdkTest/sub", 11, &paramsQOS0);
-		if(publishCount > 0) {
-			publishCount--;
-		}
-
-		sprintf(cPayload, "%s : %d ", "hello from SDK QOS1", i++);
+		sprintf(cPayload, "%s : %d ", "hello from Mac QOS1", i++);
 		paramsQOS1.payloadLen = strlen(cPayload);
 		do {
-			rc = aws_iot_mqtt_publish(&client, "sdkTest/sub", 11, &paramsQOS1);
+			rc = aws_iot_mqtt_publish(&client, "MongodbTest", 11, &paramsQOS1);
 			if(publishCount > 0) {
 				publishCount--;
 			}
+			sleep(2);
 		} while(MQTT_REQUEST_TIMEOUT_ERROR == rc && (publishCount > 0 || infinitePublishFlag));
 	}
 

@@ -1,21 +1,11 @@
-// {
-//     "Credentials": {
-//         "SecretAccessKey": "3dJbCXWB1a3xodpbk4i7UlMnAMXF8fOPAC4yYYAh", 
-//         "SessionToken": "FQoDYXdzEHwaDOpJpMYRIso5fqEFwiKsAX/XlJEXcjt2tbn/yqjTxH4l8UPi+dPO0KmChJ9udLSHC2rbjbTLqs9QACqzED5DFI/zXZzxx1tAimtlmBAWMnI/zmWgIHgNj2R/28/S1HSa+qFPh6xlljGhx3gB2NfaRiyNxanIhHeDtnyvxRCDnSWbD6uVMwsISE9H6G4UO4+c9pTkl2Wud/WcZ9lLxKQ39J7PuQ91LVYbQ3YptgexvJA/SqaNOq1o6D6DtmIo6e/bvgU=", 
-//         "Expiration": "2016-09-13T06:46:01Z", 
-//         "AccessKeyId": "ASIAIZROIUPUAK4OPICA"
-//     }
-// }
-
-
 var AWS = require('aws-sdk');
 var http = require( 'http' );
 
 
 AWS.config.update({
-    "secretAccessKey": "3dJbCXWB1a3xodpbk4i7UlMnAMXF8fOPAC4yYYAh",
-    "sessionToken": "FQoDYXdzEHwaDOpJpMYRIso5fqEFwiKsAX/XlJEXcjt2tbn/yqjTxH4l8UPi+dPO0KmChJ9udLSHC2rbjbTLqs9QACqzED5DFI/zXZzxx1tAimtlmBAWMnI/zmWgIHgNj2R/28/S1HSa+qFPh6xlljGhx3gB2NfaRiyNxanIhHeDtnyvxRCDnSWbD6uVMwsISE9H6G4UO4+c9pTkl2Wud/WcZ9lLxKQ39J7PuQ91LVYbQ3YptgexvJA/SqaNOq1o6D6DtmIo6e/bvgU=",
-    "accessKeyId": "ASIAIZROIUPUAK4OPICA",
+    "secretAccessKey": "yZEk9VZeh4YHliLEkJqCuXdxiuQm4xipmfD3JPG2",
+    "sessionToken": "FQoDYXdzEID//////////wEaDBHHlFvkSH8kdjuCeSKsAW3vVcOjJsZNupxhb1e7oxq5LCQol08q2A17SxW48v1+Kjt845PY+P8pxeBdv/eAiJhtaGgmV+F+IbS4bPeXFKh2nKS5OvFrDPHhtnZxSuwrn9XRcr5nmdDN0U0DHjuAj7Jn4YKkCEnIx8FReNxp3tRXAvtmW2zEz53vNvMu+NQgql2lc8T+TklsLpnHqmHLI7HuTO3lTbBtrv9sY4yQh/9WxRsu5q0RTUFeSIAonL6RvwU=",
+    "accessKeyId": "ASIAIAIE3PX6NHHZRZYQ",
     "region": "us-west-2"
 });
 
