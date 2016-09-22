@@ -2,12 +2,12 @@ var AWS = require('aws-sdk');
 var http = require( 'http' );
 
 
-// AWS.config.update({
-//     "secretAccessKey": "yZEk9VZeh4YHliLEkJqCuXdxiuQm4xipmfD3JPG2",
-//     "sessionToken": "FQoDYXdzEID//////////wEaDBHHlFvkSH8kdjuCeSKsAW3vVcOjJsZNupxhb1e7oxq5LCQol08q2A17SxW48v1+Kjt845PY+P8pxeBdv/eAiJhtaGgmV+F+IbS4bPeXFKh2nKS5OvFrDPHhtnZxSuwrn9XRcr5nmdDN0U0DHjuAj7Jn4YKkCEnIx8FReNxp3tRXAvtmW2zEz53vNvMu+NQgql2lc8T+TklsLpnHqmHLI7HuTO3lTbBtrv9sY4yQh/9WxRsu5q0RTUFeSIAonL6RvwU=",
-//     "accessKeyId": "ASIAIAIE3PX6NHHZRZYQ",
-//     "region": "us-west-2"
-// });
+AWS.config.update({
+    "secretAccessKey": "yZEk9VZeh4YHliLEkJqCuXdxiuQm4xipmfD3JPG2",
+    "sessionToken": "FQoDYXdzEID//////////wEaDBHHlFvkSH8kdjuCeSKsAW3vVcOjJsZNupxhb1e7oxq5LCQol08q2A17SxW48v1+Kjt845PY+P8pxeBdv/eAiJhtaGgmV+F+IbS4bPeXFKh2nKS5OvFrDPHhtnZxSuwrn9XRcr5nmdDN0U0DHjuAj7Jn4YKkCEnIx8FReNxp3tRXAvtmW2zEz53vNvMu+NQgql2lc8T+TklsLpnHqmHLI7HuTO3lTbBtrv9sY4yQh/9WxRsu5q0RTUFeSIAonL6RvwU=",
+    "accessKeyId": "ASIAIAIE3PX6NHHZRZYQ",
+    "region": "us-west-2"
+});
 
 var sns = new AWS.SNS();
 
@@ -18,12 +18,12 @@ createHttpServer();
 function parseAWSConfig(){
 	var configuration = require('./credential.json');
 	var data = configuration.Credentials;
-	AWS.config.update({
-		"secretAccessKey": data.SecretAccessKey,
-		"sessionToken": data.SessionToken,
-		"accessKeyId": data.AccessKeyId,
-		"region": "us-west-2",
-	});
+	// AWS.config.update({
+	// 	"secretAccessKey": data.SecretAccessKey,
+	// 	"sessionToken": data.SessionToken,
+	// 	"accessKeyId": data.AccessKeyId,
+	// 	"region": "us-west-2",
+	// });
 }
 
 
