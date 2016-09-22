@@ -9,9 +9,14 @@ var http = require( 'http' );
 //     "region": "us-west-2"
 // });
 
+AWS.config.update({
+	"region": "us-west-2"
+});
+
 var sns = new AWS.SNS();
 
 parseAWSConfig();
+
 createHttpServer();
 
 
@@ -21,7 +26,6 @@ function parseAWSConfig(){
 
 	var data = configuration.Credentials;
 	AWS.config.update({
-		"region": "us-west-2",
 		"secretAccessKey": data.SecretAccessKey,
 		"sessionToken": data.SessionToken,
 		"accessKeyId": data.AccessKeyId,
