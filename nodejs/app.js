@@ -44,8 +44,8 @@ function handleIncomingMessage( msgType, msgData ) {
 		}, onAwsResponse );
 
 	} else if( msgType === 'Notification' ) {
-    	console.log(msgData);
-
+    	//console.log(msgData);
+		console.log(msgData.Message)
 	} else {
 		console.log( 'Unexpected message type ' + msgType );
 	}
@@ -56,7 +56,7 @@ function createHttpServer() {
 
 	server.on( 'request', function( request, response ){
 
-		console.log("MESSAGE")
+		//console.log("MESSAGE")
 		var msgBody = '';
 
 		request.setEncoding( 'utf8' );
