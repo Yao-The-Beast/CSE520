@@ -16,7 +16,9 @@ createHttpServer();
 
 
 function parseAWSConfig(){
-	var configuration = require('./credential.json');
+	var fs = require('fs');
+	var configuration = JSON.parse(fs.readFileSync('credential.json', 'utf8'));
+
 	var data = configuration.Credentials;
 	AWS.config.update({
 		"region": "us-west-2",
@@ -24,6 +26,7 @@ function parseAWSConfig(){
 		"sessionToken": data.SessionToken,
 		"accessKeyId": data.AccessKeyId,
 	});
+	console.log(AWS.config);
 }
 
 
