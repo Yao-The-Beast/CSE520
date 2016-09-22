@@ -44,8 +44,8 @@ function mongodbHandler(msgContent){
 		}
 		var dataCollection = db.collection('data');
 		var entry = [
-			{'type':'temperature'},
-			{'data':msgContent},
+			{'type':'temperature',
+			'data':msgContent},
 		];
 
 		dataCollection.insert(entry, {w:1}, function(err, result){
