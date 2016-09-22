@@ -1,4 +1,6 @@
 var AWS = require('aws-sdk');
+var fs = require('fs');
+parseAWSConfig();
 var http = require( 'http' );
 
 
@@ -11,22 +13,20 @@ var http = require( 'http' );
 
 var sns = new AWS.SNS();
 
-parseAWSConfig();
+
 
 createHttpServer();
 
 
 function parseAWSConfig(){
-	var fs = require('fs');
 	var configuration = JSON.parse(fs.readFileSync('credential.json', 'utf8'));
-
 	var data = configuration.Credentials;
 	data.region = "us-west-2";
 	AWS.config.update({
+		"region": data.region,
 		"secretAccessKey": data.SecretAccessKey,
 		"sessionToken": data.SessionToken,
-		"accessKeyId": data.AccessKeyId,
-		"region": data.region
+		"accessKeyId": data.AccessKeyId
 	});
 	console.log(AWS.config);
 }
