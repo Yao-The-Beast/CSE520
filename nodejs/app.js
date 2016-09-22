@@ -38,7 +38,7 @@ function parseJSON( input ) {
 function mongodbHandler(msgContent){
 	var MongoClient = require('mongodb').MongoClient;
 	// Connect to the db
-	MongoClient.connect("mongodb://localhost:27017/admin", function(err, db) {
+	MongoClient.connect("mongodb://localhost:27017/test", function(err, db) {
 		if(err) { 
 			return console.dir(err); 
 		}
