@@ -48,13 +48,14 @@ function mongodbHandler(msgContent){
 				msg: msgContent,
 			}
 		);
+		console.log("DEBUG:" + msgContent);
 
 	});
 }
 
 function storeMsg(data){
 	msg = data.Message;
-	
+	mongodbHandler(msg);
 }
 
 function handleIncomingMessage( msgType, msgData ) {
