@@ -42,12 +42,17 @@ function mongodbHandler(msgContent){
 		if(err) { 
 			return console.dir(err); 
 		}
-		db.data.insert(
-			{
-				type: "temperature",
-				msg: msgContent,
+		var dataCollection = db.collection('data');
+		var entry = [
+			{'type':'temperature'},
+			{'data':msgContent},
+		];
+
+		dataCollection.insert(entry, {w:1}, function(err, result){
+			if (err) {
+				return console.dir(err);
 			}
-		);
+		});
 		console.log("DEBUG:" + msgContent);
 
 	});
