@@ -63,7 +63,7 @@ function mongodbHandler(msgContent){
 				return console.dir(err);
 			}
 		});
-		console.log("DEBUG: " + entry);
+		console.log("DEBUG: " + JSON.stringify(entry));
 	});
 }
 
