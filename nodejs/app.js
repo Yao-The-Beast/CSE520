@@ -1,6 +1,5 @@
 var AWS = require('aws-sdk');
 var fs = require('fs');
-parseAWSConfig();
 var http = require( 'http' );
 
 
@@ -13,8 +12,7 @@ var http = require( 'http' );
 
 var sns = new AWS.SNS();
 
-
-
+parseAWSConfig();
 createHttpServer();
 
 
@@ -28,7 +26,6 @@ function parseAWSConfig(){
 		"sessionToken": data.SessionToken,
 		"accessKeyId": data.AccessKeyId
 	});
-	console.log(AWS.config);
 }
 
 
@@ -71,7 +68,7 @@ function mongodbHandler(msgContent){
 				return console.dir(err);
 			}
 		});
-		//console.log("DEBUG:" + msgContent);
+		console.log("DEBUG: " + entry);
 	});
 }
 
