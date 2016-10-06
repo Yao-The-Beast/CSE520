@@ -20,4 +20,8 @@ shell-server@0.2.1            # Server-side component of the `meteor shell` comm
 
 iron:router
 twbs:bootstrap
+momentjs:moment
+velocityjs:velocityjs
+ccorcos:transitioner
+coffeescript
 webtempest:animate

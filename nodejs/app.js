@@ -45,16 +45,16 @@ function parseJSON( input ) {
 function mongodbHandler(msgContent){
 	var MongoClient = require('mongodb').MongoClient;
 	// Connect to the db
-	MongoClient.connect("mongodb://localhost:27017/test", function(err, db) {
+	MongoClient.connect("mongodb://localhost:27017/meteor", function(err, db) {
 		if(err) { 
 			return console.dir(err); 
 		}
-		var dataCollection = db.collection('data');
+		var dataCollection = db.collection('sensorData');
 		var entry = [
 			{
 				'type':'temperature',
 				'data':msgContent,
-				'timestamp': new Date()
+				'timestamp': (new Date()),
 			},
 		];
 
@@ -63,7 +63,7 @@ function mongodbHandler(msgContent){
 				return console.dir(err);
 			}
 		});
-		console.log("DEBUG: " + JSON.stringify(entry));
+		//console.log("DEBUG: " + JSON.stringify(entry));
 	});
 }
 

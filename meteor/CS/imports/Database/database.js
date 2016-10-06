@@ -9,14 +9,3 @@ if (Meteor.isServer) {
 		return output;
 	});
 }
-
-Meteor.methods({
-	'sensorData.setChecked'(sensorDataId, setChecked) {
-		check(taskId, String);
-    	check(setChecked, Boolean);
-
-    	const task = SensorData.findOne(sensorDataId)
-
-    	SensorData.update(sensorDataId, {$set: {checked: setChecked}})
-	}
-});
