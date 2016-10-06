@@ -72,6 +72,38 @@ function storeMsg(data){
 	mongodbHandler(msg);
 }
 
+function dummyMongodbHandler(msgContent){
+	var MongoClient = require('mongodb').MongoClient;
+	// Connect to the db
+	MongoClient.connect("mongodb://localhost:27017/meteor", function(err, db) {
+		if(err) { 
+			return console.dir(err); 
+		}
+		var dataCollection = db.collection('sensorData');
+		var entry = [
+			{
+				'type':'temperature',
+                'name':'sensor1',
+				'data':msgContent,
+				'timestamp': (new Date()),
+			},
+		];
+
+		dataCollection.insert(entry, {w:1}, function(err, result){
+			if (err) {
+				return console.dir(err);
+			}
+		});
+		console.log("DEBUG: " + JSON.stringify(entry));
+	});
+}
+
+function dummyMessageInserter(){
+    var data = Math.floor(Math.random()*100);
+    dummyMongodbHandler(data);
+}
+
+
 function handleIncomingMessage( msgType, msgData ) {
 	if( msgType === 'SubscriptionConfirmation') {
 		console.log("Confirm Subscription");
@@ -81,7 +113,10 @@ function handleIncomingMessage( msgType, msgData ) {
 		}, onAwsResponse );
 
 	} else if( msgType === 'Notification' ) {
-    	storeMsg(msgData);
+    	//messageInserter(msgData);
+    	dummyMessageInserter();
+    	console.log(msgData);
+	
 	} else {
 		console.log( 'Unexpected message type ' + msgType );
 	}
@@ -93,7 +128,6 @@ function createHttpServer() {
 
 	server.on( 'request', function( request, response ){
 
-		//console.log("MESSAGE")
 		var msgBody = '';
 
 		request.setEncoding( 'utf8' );
