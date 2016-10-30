@@ -228,15 +228,7 @@ int main(int argc, char **argv) {
 		IOT_ERROR("Error subscribing : %d ", rc);
 		return rc;
 	}
-    //yao
-    //get currentTime
-    std::string currentTime = getCurrentTime();
-    strcpy(cPayload,currentTime.c_str());
-	//sprintf(cPayload, "%s : %d ", "hello from Mac", i);
-
-	paramsQOS1.qos = QOS1;
-	paramsQOS1.payload = (void *) cPayload;
-	paramsQOS1.isRetained = 0;
+    
 
 	if(publishCount != 0) {
 		infinitePublishFlag = false;
@@ -254,13 +246,16 @@ int main(int argc, char **argv) {
 			continue;
 		}
 
-        //yao
-        //get currentTime
-        std::string currentTime = getCurrentTime();
-        strcpy(cPayload,currentTime.c_str());
-        //sprintf(cPayload, "%s : %d ", "hello from Mac QQS", i);
-		paramsQOS1.payloadLen = strlen(cPayload);
 		do {
+			//yao
+		    //set payload
+		    std::string currentTime = getCurrentTime();
+		    strcpy(cPayload,currentTime.c_str());
+			paramsQOS1.qos = QOS1;
+			paramsQOS1.payload = (void *) cPayload;
+			paramsQOS1.isRetained = 0;
+			paramsQOS1.payloadLen = strlen(cPayload);
+			
 			rc = aws_iot_mqtt_publish(&client, "MongodbTest", 11, &paramsQOS1);
 			if(publishCount > 0) {
 				publishCount--;
