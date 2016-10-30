@@ -10,7 +10,7 @@ client.connect(1337, '52.36.56.232', function() {
 		client.write(data);
 		i++;
 		var timestamp = moment().format('x');
-		while (moment().format('x') - timestamp < 50){
+		while (moment().format('x') - timestamp < 1000){
 
 		}
 	}
