@@ -5,6 +5,10 @@ var http = require( 'http' );
 var moment = require( 'moment');
 var sns = new AWS.SNS();
 
+//test latency purpose
+var messageReceived = 0;
+var data = [];
+
 
 createHttpServer();
 
@@ -32,6 +36,13 @@ function subscribeToSnS() {
 	  Endpoint: 'http://ec2-52-36-56-232.us-west-2.compute.amazonaws.com'
 	};
 	sns.subscribe(params, onAwsResponse );	
+}
+
+function writeToFile() {
+	var file = fs.createWriteStream('output.txt');
+	file.on('error', function(err) { /* error handling */ });
+	data.forEach(function(v) { file.write(v.join(', ') + '\n'); });
+	file.end();
 }
 
 function parseJSON( input ) {
@@ -115,10 +126,18 @@ function handleIncomingMessage( msgType, msgData ) {
 	} else if( msgType === 'Notification' ) {
     	//dummyMessageInserter();
     	var currentDate = moment().format('x');
-    	var latency = parseInt(msgData.Message) - parseInt(currentDate);
+    	var latency = parseInt(currentDate) - parseInt(msgData.Message);
     	console.log("Latency: " + latency + "ms");
+
+    	//write to file
+    	if (messageReceived == 100) {
+    		writeToFile();
+    	}else if (messageReceived < 100) {
+    		data[data.length] = latency;
+    	}
+    	messageReceived++;
+
 	} else {
-		//console.log( 'Unexpected message type ' + msgType );
 		console.log( msgData);
 	}
 }
