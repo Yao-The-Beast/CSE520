@@ -243,7 +243,7 @@ int main(int argc, char **argv) {
 
 		//Max time the yield function will wait for read messages
 		//wait for messages or ping the serve to claim healthy
-		rc = aws_iot_mqtt_yield(&client, 100);
+		rc = aws_iot_mqtt_yield(&client, 25);
 		
 		if(NETWORK_ATTEMPTING_RECONNECT == rc) {
 			// If the client is attempting to reconnect we will skip the rest of the loop.
