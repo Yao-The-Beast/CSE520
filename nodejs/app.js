@@ -2,7 +2,7 @@ var AWS = require('aws-sdk');
 var fs = require('fs');
 parseAWSConfig();
 var http = require( 'http' );
-
+var moment = require( 'moment');
 var sns = new AWS.SNS();
 
 
@@ -113,12 +113,15 @@ function handleIncomingMessage( msgType, msgData ) {
 		}, onAwsResponse );
 
 	} else if( msgType === 'Notification' ) {
-    	//messageInserter(msgData);
-    	dummyMessageInserter();
-    	console.log(msgData);
+    	//dummyMessageInserter();
+    	var currentDate = moment().format();
+    	console.log("CurrentTime: " + currentDate);
+    	console.log("SentTime: " + msgData);
+    	console.log("------------------------");
 	
 	} else {
-		console.log( 'Unexpected message type ' + msgType );
+		//console.log( 'Unexpected message type ' + msgType );
+		console.log( msgData);
 	}
 }
 

@@ -25,12 +25,14 @@
  * The application takes in the certificate path, host name , port and the number of times the publish should happen.
  *
  */
+#include <string>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <unistd.h>
 #include <limits.h>
 #include <string.h>
+#include <ctime>
 
 #include "aws_iot_config.h"
 #include "aws_iot_log.h"
@@ -123,7 +125,25 @@ void parseInputArgsForConnectParams(int argc, char **argv) {
 				break;
 		}
 	}
+}
 
+std::string getCurrentTime(){
+    time_t currentTime;
+    struct tm *localTime;
+    
+    time( &currentTime );                   // Get the current time
+    localTime = localtime( &currentTime );  // Convert the current time to the local time
+    
+    int Day    = localTime->tm_mday;
+    int Month  = localTime->tm_mon + 1;
+    int Year   = localTime->tm_year + 1900;
+    int Hour   = localTime->tm_hour;
+    int Min    = localTime->tm_min;
+    int Sec    = localTime->tm_sec;
+    
+    char output[100];
+    sprintf(output, "%d/%d/%d %d:%d:%d", Year, Month, Day, Hour, Min, Sec);
+    return std::string(output);
 }
 
 int main(int argc, char **argv) {
@@ -208,8 +228,11 @@ int main(int argc, char **argv) {
 		IOT_ERROR("Error subscribing : %d ", rc);
 		return rc;
 	}
-
-	sprintf(cPayload, "%s : %d ", "hello from Mac", i);
+    //yao
+    //get currentTime
+    std::string currentTime = getCurrentTime();
+    strcpy(cPayload,currentTime.c_str());
+	//sprintf(cPayload, "%s : %d ", "hello from Mac", i);
 
 	paramsQOS1.qos = QOS1;
 	paramsQOS1.payload = (void *) cPayload;
@@ -231,7 +254,11 @@ int main(int argc, char **argv) {
 			continue;
 		}
 
-		sprintf(cPayload, "%s : %d ", "hello from Mac QOS1", i++);
+        //yao
+        //get currentTime
+        std::string currentTime = getCurrentTime();
+        strcpy(cPayload,currentTime.c_str());
+        //sprintf(cPayload, "%s : %d ", "hello from Mac QQS", i);
 		paramsQOS1.payloadLen = strlen(cPayload);
 		do {
 			rc = aws_iot_mqtt_publish(&client, "MongodbTest", 11, &paramsQOS1);

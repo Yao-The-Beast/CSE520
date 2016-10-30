@@ -2,6 +2,8 @@ import '../imports/Database/database.js';
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { HTTP } from 'meteor/http'
+import { WebApp } from 'meteor/webapp'
 import { SensorData } from '../imports/Database/database.js';
 
 function distinct(collection, field) {
@@ -33,6 +35,22 @@ Template.sensorDataList.helpers({
       var output = SensorData.find({'name':sensorName}, {sort:{'timestamp':-1}, limit:50});
       return output;
   },
+});
+
+Template.sensorDataList.events({
+  'click #alert': function(){
+    var sensorName = Router.current().params.sensorName;
+    var postData = {
+      data: {
+        "name": sensorName,
+        "type": "alert",
+        "content": "alert",
+      }
+    };
+    Meteor.call('sendCommand', postData, function(err, response) {
+      console.log("Msg Sent");
+    });
+  }
 });
 
 

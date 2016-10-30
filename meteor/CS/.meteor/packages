@@ -25,3 +25,5 @@ velocityjs:velocityjs
 ccorcos:transitioner
 coffeescript
 webtempest:animate
+http
+webapp
