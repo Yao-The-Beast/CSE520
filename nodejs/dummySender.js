@@ -3,8 +3,18 @@ var moment = require('moment');
 
 var client = new net.Socket();
 client.connect(1337, '52.36.56.232', function() {
-	var currentTimestamp = moment().format('x');
-	client.write(parseInt(currentTimestamp));
+	var i =0;
+	while (i < 100) {
+		var currentTimestamp = moment().format('x');
+		var data = currentTimestamp.toString();
+		client.write(data);
+		i++;
+		var timestamp = moment().format('x');
+		while (moment().format('x') - timestamp < 50){
+
+		}
+	}
+	console.log("END");
 });
 
 client.on('data', function(data) {
