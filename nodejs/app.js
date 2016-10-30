@@ -136,13 +136,13 @@ function handleIncomingMessage( msgType, msgData ) {
 
     	//write to file
     	//latency purprose
-    	if (messageReceived == 100) {
-    		writeToFile();
-    		console.log("LATENCY DATA WROTE TO FILE");
-    	}else if (messageReceived < 100) {
-    		data[data.length] = latency;
-    	}
-    	messageReceived++;
+    	// if (messageReceived == 100) {
+    	// 	writeToFile();
+    	// 	console.log("LATENCY DATA WROTE TO FILE");
+    	// }else if (messageReceived < 100) {
+    	// 	data[data.length] = latency;
+    	// }
+    	// messageReceived++;
 
 	} else {
 		console.log( msgData);
