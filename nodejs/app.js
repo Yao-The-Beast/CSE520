@@ -39,10 +39,15 @@ function subscribeToSnS() {
 }
 
 function writeToFile() {
-	var file = fs.createWriteStream('output.txt');
-	file.on('error', function(err) { /* error handling */ });
-	data.forEach(function(v) { file.write(v.join(', ') + '\n'); });
-	file.end();
+	fs.writeFile(
+    	'latency_result',
+	    JSON.stringify(data),
+	    function (err) {
+	        if (err) {
+	            console.error('Crap happens');
+	        }
+	    }
+	);
 }
 
 function parseJSON( input ) {
