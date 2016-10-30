@@ -2,7 +2,7 @@ var net = require('net');
 var moment = require('moment');
 
 var client = new net.Socket();
-client.connect(8000, '192.168.1.4', function() {
+client.connect(1337, '52.36.56.232', function() {
 	var currentTimestamp = moment().format('x');
 	client.write(parseInt(currentTimestamp));
 });
