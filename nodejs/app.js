@@ -116,7 +116,7 @@ function handleIncomingMessage( msgType, msgData ) {
     	//dummyMessageInserter();
     	var currentDate = moment().format();
     	console.log("CurrentTime: " + currentDate);
-    	console.log(msgData);
+    	console.log("SentTime: " + msgData.Message);
     	console.log("------------------------");
 	
 	} else {
