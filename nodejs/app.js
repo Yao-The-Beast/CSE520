@@ -115,10 +115,8 @@ function handleIncomingMessage( msgType, msgData ) {
 	} else if( msgType === 'Notification' ) {
     	//dummyMessageInserter();
     	var currentDate = moment().format('x');
-    	console.log("CurrentTime: " + currentDate);
-    	console.log("SentTime:    " + msgData.Message);
-    	console.log("------------------------");
-	
+    	var latency = parseInt(msgData.Message) - parseInt(currentDate);
+    	console.log("Latency: " + latency + "ms");
 	} else {
 		//console.log( 'Unexpected message type ' + msgType );
 		console.log( msgData);
