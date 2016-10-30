@@ -264,7 +264,7 @@ int main(int argc, char **argv) {
 			if(publishCount > 0) {
 				publishCount--;
 			}
-			usleep(100);
+			usleep(25);
 		} while(MQTT_REQUEST_TIMEOUT_ERROR == rc && (publishCount > 0 || infinitePublishFlag));
 	}
 
