@@ -114,9 +114,9 @@ function handleIncomingMessage( msgType, msgData ) {
 
 	} else if( msgType === 'Notification' ) {
     	//dummyMessageInserter();
-    	var currentDate = moment().format();
+    	var currentDate = moment().format('x');
     	console.log("CurrentTime: " + currentDate);
-    	console.log("SentTime: " + msgData.Message);
+    	console.log("SentTime:    " + msgData.Message);
     	console.log("------------------------");
 	
 	} else {

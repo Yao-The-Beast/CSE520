@@ -128,22 +128,26 @@ void parseInputArgsForConnectParams(int argc, char **argv) {
 }
 
 std::string getCurrentTime(){
-    time_t currentTime;
-    struct tm *localTime;
+    // time_t currentTime;
+    // struct tm *localTime;
     
-    time( &currentTime );                   // Get the current time
-    localTime = localtime( &currentTime );  // Convert the current time to the local time
+    // time( &currentTime );                   // Get the current time
+    // localTime = localtime( &currentTime );  // Convert the current time to the local time
     
-    int Day    = localTime->tm_mday;
-    int Month  = localTime->tm_mon + 1;
-    int Year   = localTime->tm_year + 1900;
-    int Hour   = localTime->tm_hour;
-    int Min    = localTime->tm_min;
-    int Sec    = localTime->tm_sec;
+    // int Day    = localTime->tm_mday;
+    // int Month  = localTime->tm_mon + 1;
+    // int Year   = localTime->tm_year + 1900;
+    // int Hour   = localTime->tm_hour;
+    // int Min    = localTime->tm_min;
+    // int Sec    = localTime->tm_sec;
     
-    char output[100];
-    sprintf(output, "%d/%d/%d %d:%d:%d", Year, Month, Day, Hour, Min, Sec);
-    return std::string(output);
+    // char output[100];
+    // sprintf(output, "%d/%d/%d %d:%d:%d", Year, Month, Day, Hour, Min, Sec);
+	// return std::string(output);
+    struct timeval tp;
+	gettimeofday(&tp, NULL);
+	long int ms = tp.tv_sec * 1000 + tp.tv_usec / 1000;
+	return std::to_string(ms);
 }
 
 int main(int argc, char **argv) {
@@ -255,7 +259,7 @@ int main(int argc, char **argv) {
 			paramsQOS1.payload = (void *) cPayload;
 			paramsQOS1.isRetained = 0;
 			paramsQOS1.payloadLen = strlen(cPayload);
-			
+
 			rc = aws_iot_mqtt_publish(&client, "MongodbTest", 11, &paramsQOS1);
 			if(publishCount > 0) {
 				publishCount--;
