@@ -33,7 +33,7 @@ net.createServer(function(sock) {
         
         console.log('DATA ' + sock.remoteAddress + ': ' + data);
         var sentTime = parseInt(data);
-        var currentTime = moment.format('x');
+        var currentTime = moment().format('x');
         var latency = currentTime - sentTime;
         console.log("Latency: " + latency);
 
