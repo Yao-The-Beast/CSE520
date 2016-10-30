@@ -31,7 +31,7 @@ net.createServer(function(sock) {
     // Add a 'data' event handler to this instance of socket
     sock.on('data', function(data) {
         
-        console.log('DATA ' + sock.remoteAddress + ': ' + data);
+        //console.log('DATA ' + sock.remoteAddress + ': ' + data);
         var sentTime = parseInt(data);
         var currentTime = moment().format('x');
         var latency = currentTime - sentTime;
