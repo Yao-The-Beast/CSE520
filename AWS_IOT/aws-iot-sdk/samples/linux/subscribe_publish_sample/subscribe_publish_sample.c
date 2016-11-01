@@ -201,7 +201,7 @@ int main(int argc, char **argv) {
 	}
 
 	IOT_INFO("Subscribing...");
-	rc = aws_iot_mqtt_subscribe(&client, "sdkTest/sub", 11, QOS0, iot_subscribe_callback_handler, NULL);
+	rc = aws_iot_mqtt_subscribe(&client, "ledLight", 8, QOS0, iot_subscribe_callback_handler, NULL);
 	if(SUCCESS != rc) {
 		IOT_ERROR("Error subscribing : %d ", rc);
 		return rc;
@@ -219,6 +219,10 @@ int main(int argc, char **argv) {
 
 	if(publishCount != 0) {
 		infinitePublishFlag = false;
+	}
+
+	while (1){
+		usleep(100);
 	}
 
 	while((NETWORK_ATTEMPTING_RECONNECT == rc || NETWORK_RECONNECTED == rc || SUCCESS == rc)

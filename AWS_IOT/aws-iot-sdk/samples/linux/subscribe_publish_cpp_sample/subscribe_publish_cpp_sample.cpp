@@ -33,6 +33,7 @@
 #include <limits.h>
 #include <string.h>
 #include <ctime>
+#include <iostream>
 
 #include "aws_iot_config.h"
 #include "aws_iot_log.h"
@@ -97,19 +98,19 @@ void parseInputArgsForConnectParams(int argc, char **argv) {
 		switch(opt) {
 			case 'h':
 				strcpy(HostAddress, optarg);
-				IOT_DEBUG("Host %s", optarg);
+				//IOT_DEBUG("Host %s", optarg);
 				break;
 			case 'p':
 				port = atoi(optarg);
-				IOT_DEBUG("arg %s", optarg);
+				//IOT_DEBUG("arg %s", optarg);
 				break;
 			case 'c':
 				strcpy(certDirectory, optarg);
-				IOT_DEBUG("cert root directory %s", optarg);
+				//IOT_DEBUG("cert root directory %s", optarg);
 				break;
 			case 'x':
 				publishCount = atoi(optarg);
-				IOT_DEBUG("publish %s times\n", optarg);
+				//IOT_DEBUG("publish %s times\n", optarg);
 				break;
 			case '?':
 				if(optopt == 'c') {
@@ -180,9 +181,6 @@ int main(int argc, char **argv) {
 	snprintf(clientCRT, PATH_MAX + 1, "%s/%s/%s", CurrentWD, certDirectory, AWS_IOT_CERTIFICATE_FILENAME);
 	snprintf(clientKey, PATH_MAX + 1, "%s/%s/%s", CurrentWD, certDirectory, AWS_IOT_PRIVATE_KEY_FILENAME);
 
-	IOT_DEBUG("rootCA %s", rootCA);
-	IOT_DEBUG("clientCRT %s", clientCRT);
-	IOT_DEBUG("clientKey %s", clientKey);
 	//configure initial params
 	mqttInitParams.enableAutoReconnect = false; // We enable this later below
 	mqttInitParams.pHostURL = HostAddress;
@@ -227,23 +225,24 @@ int main(int argc, char **argv) {
 	}
 
 	IOT_INFO("Subscribing...");
-	rc = aws_iot_mqtt_subscribe(&client, "MongodbTest", 11, QOS0, iot_subscribe_callback_handler, NULL);
+	rc = aws_iot_mqtt_subscribe(&client, "ledLight", 8, QOS0, iot_subscribe_callback_handler, NULL);
 	if(SUCCESS != rc) {
 		IOT_ERROR("Error subscribing : %d ", rc);
 		return rc;
 	}
     
+	// if(publishCount != 0) {
+	// 	infinitePublishFlag = false;
+	// }
 
-	if(publishCount != 0) {
-		infinitePublishFlag = false;
-	}
-
+	//publishCount = 0;
+	//infinitePublishFlag = false;
 	while((NETWORK_ATTEMPTING_RECONNECT == rc || NETWORK_RECONNECTED == rc || SUCCESS == rc)
 		  && (publishCount > 0 || infinitePublishFlag)) {
 
 		//Max time the yield function will wait for read messages
 		//wait for messages or ping the serve to claim healthy
-		rc = aws_iot_mqtt_yield(&client, 10);
+		rc = aws_iot_mqtt_yield(&client, 200);
 		
 		if(NETWORK_ATTEMPTING_RECONNECT == rc) {
 			// If the client is attempting to reconnect we will skip the rest of the loop.
@@ -260,11 +259,9 @@ int main(int argc, char **argv) {
 			paramsQOS1.isRetained = 0;
 			paramsQOS1.payloadLen = strlen(cPayload);
 
-			rc = aws_iot_mqtt_publish(&client, "MongodbTest", 11, &paramsQOS1);
-			if(publishCount > 0) {
-				publishCount--;
-			}
-			usleep(10);
+			rc = aws_iot_mqtt_publish(&client, "sensorData", 10, &paramsQOS1);
+			std::cout << "Publish" << std::endl;
+			sleep(1);
 		} while(MQTT_REQUEST_TIMEOUT_ERROR == rc && (publishCount > 0 || infinitePublishFlag));
 	}
 

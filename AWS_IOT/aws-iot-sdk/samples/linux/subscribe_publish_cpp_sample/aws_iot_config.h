@@ -25,9 +25,9 @@
 // =================================================
 #define AWS_IOT_MQTT_HOST              "a3aynbt20dwoic.iot.us-west-2.amazonaws.com"
 #define AWS_IOT_MQTT_PORT              8883
-#define AWS_IOT_MQTT_CLIENT_ID         "myRaspberryPi"
+#define AWS_IOT_MQTT_CLIENT_ID         "a211"
 #define AWS_IOT_MY_THING_NAME          "myRaspberryPi"
-#define AWS_IOT_ROOT_CA_FILENAME      "root-CA.crt"
+#define AWS_IOT_ROOT_CA_FILENAME       "root-CA.crt"
 #define AWS_IOT_CERTIFICATE_FILENAME   "3c85540033-certificate.pem.crt"
 #define AWS_IOT_PRIVATE_KEY_FILENAME   "3c85540033-private.pem.key"
 // =================================================
@@ -35,7 +35,7 @@
 // MQTT PubSub
 #define AWS_IOT_MQTT_TX_BUF_LEN 512 ///< Any time a message is sent out through the MQTT layer. The message is copied into this buffer anytime a publish is done. This will also be used in the case of Thing Shadow
 #define AWS_IOT_MQTT_RX_BUF_LEN 512 ///< Any message that comes into the device should be less than this buffer size. If a received message is bigger than this buffer size the message will be dropped.
-#define AWS_IOT_MQTT_NUM_SUBSCRIBE_HANDLERS 5 ///< Maximum number of topic filters the MQTT client can handle at any given time. This should be increased appropriately when using Thing Shadow
+#define AWS_IOT_MQTT_NUM_SUBSCRIBE_HANDLERS 10 ///< Maximum number of topic filters the MQTT client can handle at any given time. This should be increased appropriately when using Thing Shadow
 
 // Thing Shadow specific configs
 #define SHADOW_MAX_SIZE_OF_RX_BUFFER AWS_IOT_MQTT_RX_BUF_LEN+1 ///< Maximum size of the SHADOW buffer to store the received Shadow message

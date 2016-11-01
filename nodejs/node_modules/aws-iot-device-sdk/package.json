@@ -1,0 +1,84 @@
+{
+  "name": "aws-iot-device-sdk",
+  "description": "AWS IoT Node.js SDK for Embedded Devices",
+  "version": "1.0.13",
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "http://aws.amazon.com"
+  },
+  "homepage": "https://github.com/aws/aws-iot-device-sdk-js",
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.8.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aws/aws-iot-device-sdk-js.git"
+  },
+  "bugs": {
+    "url": "http://github.com/aws/aws-iot-device-sdk-js/issues"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "api",
+    "amazon",
+    "aws",
+    "iot",
+    "mqtt"
+  ],
+  "dependencies": {
+    "mqtt": "1.11.2",
+    "minimist": "1.2.0",
+    "websocket-stream": "^3.1.0",
+    "crypto-js": "3.1.6"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-jscs": "^3.0.2",
+    "gulp-jshint": "^2.0.0",
+    "gulp-mocha": "^2.2.0",
+    "jshint": "^2.9.1",
+    "jshint-stylish": "^2.1.0",
+    "gulp-coverage": "^0.3.38",
+    "gulp-beautify": "^2.0.0",
+    "sinon": "^1.17.3",
+    "rewire": "^2.5.1"
+  },
+  "scripts": {
+    "test": "node ./node_modules/gulp/bin/gulp.js test --verbose",
+    "browserize": "./scripts/browserize.sh",
+    "beautify": "node ./node_modules/gulp/bin/gulp.js beautify"
+  },
+  "gitHead": "97b0b468d59e02e2f6a1dce321000d914cb47894",
+  "_id": "aws-iot-device-sdk@1.0.13",
+  "_shasum": "bdc954f43051f37c3d464a2d13d2b812cc8f9dee",
+  "_from": "aws-iot-device-sdk@latest",
+  "_npmVersion": "3.6.0",
+  "_nodeVersion": "5.7.0",
+  "_npmUser": {
+    "name": "aws",
+    "email": "aws-sdk-js@amazon.com"
+  },
+  "maintainers": [
+    {
+      "name": "aws",
+      "email": "aws-sdk-js@amazon.com"
+    },
+    {
+      "name": "gkwicker.amazon",
+      "email": "gkwicker@amazon.com"
+    }
+  ],
+  "dist": {
+    "shasum": "bdc954f43051f37c3d464a2d13d2b812cc8f9dee",
+    "tarball": "https://registry.npmjs.org/aws-iot-device-sdk/-/aws-iot-device-sdk-1.0.13.tgz"
+  },
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/aws-iot-device-sdk-1.0.13.tgz_1476309146972_0.7179413738194853"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/aws-iot-device-sdk/-/aws-iot-device-sdk-1.0.13.tgz",
+  "readme": "ERROR: No README data found!"
+}

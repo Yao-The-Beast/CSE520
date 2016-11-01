@@ -129,11 +129,11 @@ function handleIncomingMessage( msgType, msgData ) {
 		}, onAwsResponse );
 
 	} else if( msgType === 'Notification' ) {
-    	//dummyMessageInserter();
-    	var currentDate = moment().format('x');
-    	var latency = parseInt(currentDate) - parseInt(msgData.Message);
-    	console.log("Latency: " + latency + "ms");
+    	dummyMessageInserter();
 
+    	// var currentDate = moment().format('x');
+    	// var latency = parseInt(currentDate) - parseInt(msgData.Message);
+    	// console.log("Latency: " + latency + "ms");
     	//write to file
     	//latency purprose
     	// if (messageReceived == 100) {
