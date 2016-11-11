@@ -57,7 +57,7 @@ void iot_subscribe_callback_handler(AWS_IoT_Client *pClient, char *topicName, ui
 	IOT_UNUSED(pData);
 	IOT_UNUSED(pClient);
 	// IOT_INFO("Subscribe callback");
-	IOT_INFO("%.*s\t%.*s", topicNameLen, topicName, (int) params->payloadLen, params->payload);
+	//IOT_INFO("%.*s\t%.*s", topicNameLen, topicName, (int) params->payloadLen, params->payload);
 	std::string currentTime = getCurrentTime();
 	char* payload = (char*) params->payload;
 	int payloadLen = (int)params->payloadLen;
@@ -69,10 +69,11 @@ void iot_subscribe_callback_handler(AWS_IoT_Client *pClient, char *topicName, ui
 		long int currentTime = std::stol(getCurrentTime(),nullptr,10);
 		long int latency = currentTime - sentTime;
 		std::cout << latency << std::endl;
+		std::cout << "Topic:" << topic << ";Data: " << data << std::endl;
 	}else if (topic.compare("sensorData") == 0){
-
+		std::cout << "Topic:" << topic << ";Data: " << data << std::endl;
 	}else if (topic.compare("ledData") == 0){
-		std::cout << "Topic:" << topic << "; Data" << data << std::endl;
+		std::cout << "Topic:" << topic << ";Data: " << data << std::endl;
 	}else{
 
 	}
@@ -247,7 +248,7 @@ int main(int argc, char **argv) {
 			paramsQOS1.payload = (void *) cPayload;
 			paramsQOS1.isRetained = 0;
 			paramsQOS1.payloadLen = strlen(cPayload);
-			rc = aws_iot_mqtt_publish(&client, "sensorData", 11, &paramsQOS1);
+			rc = aws_iot_mqtt_publish(&client, "sensorData", 10, &paramsQOS1);
 			sleep(3);
 		} while(MQTT_REQUEST_TIMEOUT_ERROR == rc && (publishCount > 0 || infinitePublishFlag));
 	}

@@ -201,6 +201,7 @@ function handleIncomingMessage( msgType, msgData ) {
 		}, onAwsResponse );
 
 	} else if( msgType === 'Notification' ) {
+		console.log("GET Notification");
     	dummyMessageInserter();
 	} else {
 		console.log( msgData);
