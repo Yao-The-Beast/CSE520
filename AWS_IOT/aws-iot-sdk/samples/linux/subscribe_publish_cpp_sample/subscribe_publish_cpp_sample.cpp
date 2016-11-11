@@ -40,32 +40,43 @@
 #include "aws_iot_version.h"
 #include "aws_iot_mqtt_client_interface.h"
 
-/**
- * @brief Default cert location
- */
 char certDirectory[PATH_MAX + 1] = "../../../certs";
-
-/**
- * @brief Default MQTT HOST URL is pulled from the aws_iot_config.h
- */
 char HostAddress[255] = AWS_IOT_MQTT_HOST;
-
-/**
- * @brief Default MQTT port is pulled from the aws_iot_config.h
- */
 uint32_t port = AWS_IOT_MQTT_PORT;
-
-/**
- * @brief This parameter will avoid infinite loop of publish and exit the program after certain number of publishes
- */
 uint32_t publishCount = 0;
+
+std::string getCurrentTime(){
+    struct timeval tp;
+	gettimeofday(&tp, NULL);
+	long int ms = tp.tv_sec * 1000 + tp.tv_usec / 1000;
+	return std::to_string(ms);
+}
 
 void iot_subscribe_callback_handler(AWS_IoT_Client *pClient, char *topicName, uint16_t topicNameLen,
 									IoT_Publish_Message_Params *params, void *pData) {
 	IOT_UNUSED(pData);
 	IOT_UNUSED(pClient);
-	IOT_INFO("Subscribe callback");
-	IOT_INFO("%.*s\t%.*s", topicNameLen, topicName, (int) params->payloadLen, params->payload);
+	// IOT_INFO("Subscribe callback");
+	// IOT_INFO("%.*s\t%.*s", topicNameLen, topicName, (int) params->payloadLen, params->payload);
+	std::string currentTime = getCurrentTime();
+	char* payload = (char*) params->payload;
+	int payloadLen = (int)params->payloadLen;
+	std::string data(payload,payloadLen);
+	std::string topic(topicName,topicNameLen);
+	
+	if (topic.compare("latencyTest") == 0){
+		long int sentTime = std::stol(data,nullptr,10);
+		long int currentTime = std::stol(getCurrentTime(),nullptr,10);
+		long int latency = currentTime - sentTime;
+		std::cout << latency << std::endl;
+	}else if (topic.compare("sensorData") == 0){
+
+	}else if (topic.compare("ledData") == 0){
+		std::cout << "Topic:" << topic << "; Data" << data << std::endl;
+	}else{
+
+	}
+	
 }
 
 void disconnectCallbackHandler(AWS_IoT_Client *pClient, void *data) {
@@ -128,28 +139,7 @@ void parseInputArgsForConnectParams(int argc, char **argv) {
 	}
 }
 
-std::string getCurrentTime(){
-    // time_t currentTime;
-    // struct tm *localTime;
-    
-    // time( &currentTime );                   // Get the current time
-    // localTime = localtime( &currentTime );  // Convert the current time to the local time
-    
-    // int Day    = localTime->tm_mday;
-    // int Month  = localTime->tm_mon + 1;
-    // int Year   = localTime->tm_year + 1900;
-    // int Hour   = localTime->tm_hour;
-    // int Min    = localTime->tm_min;
-    // int Sec    = localTime->tm_sec;
-    
-    // char output[100];
-    // sprintf(output, "%d/%d/%d %d:%d:%d", Year, Month, Day, Hour, Min, Sec);
-	// return std::string(output);
-    struct timeval tp;
-	gettimeofday(&tp, NULL);
-	long int ms = tp.tv_sec * 1000 + tp.tv_usec / 1000;
-	return std::to_string(ms);
-}
+
 
 int main(int argc, char **argv) {
 	bool infinitePublishFlag = true;
@@ -225,15 +215,12 @@ int main(int argc, char **argv) {
 	}
 
 	IOT_INFO("Subscribing...");
-	rc = aws_iot_mqtt_subscribe(&client, "ledLight", 8, QOS0, iot_subscribe_callback_handler, NULL);
+	rc = aws_iot_mqtt_subscribe(&client, "ledData",11, QOS0, iot_subscribe_callback_handler, NULL);
 	if(SUCCESS != rc) {
 		IOT_ERROR("Error subscribing : %d ", rc);
 		return rc;
 	}
     
-	// if(publishCount != 0) {
-	// 	infinitePublishFlag = false;
-	// }
 
 	//publishCount = 0;
 	//infinitePublishFlag = false;
@@ -242,7 +229,7 @@ int main(int argc, char **argv) {
 
 		//Max time the yield function will wait for read messages
 		//wait for messages or ping the serve to claim healthy
-		rc = aws_iot_mqtt_yield(&client, 200);
+		rc = aws_iot_mqtt_yield(&client, 500);
 		
 		if(NETWORK_ATTEMPTING_RECONNECT == rc) {
 			// If the client is attempting to reconnect we will skip the rest of the loop.
@@ -258,10 +245,8 @@ int main(int argc, char **argv) {
 			paramsQOS1.payload = (void *) cPayload;
 			paramsQOS1.isRetained = 0;
 			paramsQOS1.payloadLen = strlen(cPayload);
-
-			rc = aws_iot_mqtt_publish(&client, "sensorData", 10, &paramsQOS1);
-			std::cout << "Publish" << std::endl;
-			sleep(1);
+			rc = aws_iot_mqtt_publish(&client, "sensorData", 11, &paramsQOS1);
+			usleep(3000);
 		} while(MQTT_REQUEST_TIMEOUT_ERROR == rc && (publishCount > 0 || infinitePublishFlag));
 	}
 

@@ -4,13 +4,62 @@ parseAWSConfig();
 var http = require( 'http' );
 var moment = require( 'moment');
 var sns = new AWS.SNS();
+var nodemailer = require('nodemailer');
+
+//aws iot
+var awsIot = require('aws-iot-device-sdk');
+var device = awsIot.device({
+  keyPath: "certs/6b76266105-private.pem.key",
+  certPath: "certs/6b76266105-certificate.pem.crt",
+  caPath: "certs/root-CA.crt",
+  clientId: "haha",
+  region: "us-west-2",
+  baseReconnectTimeMs: 4000,
+  keepalive: 30,
+  protocol: "mqtts",
+  port: 8883,
+  host: "a3aynbt20dwoic.iot.us-west-2.amazonaws.com",
+  debug: false
+});
 
 //test latency purpose
 var messageReceived = 0;
 var data = [];
 
 
-createHttpServer();
+handleIoTDevice();
+//createHttpServer();
+
+
+function handleIoTDevice(){
+	device
+      .on('connect', function() {
+         console.log('connect');
+      });
+   device
+      .on('close', function() {
+         console.log('close');
+      });
+   device
+      .on('reconnect', function() {
+         console.log('reconnect');
+      });
+   device
+      .on('offline', function() {
+         console.log('offline');
+      });
+   device
+      .on('error', function(error) {
+         console.log('error', error);
+      });
+   device
+      .on('message', function(topic, payload) {
+          console.log('message', topic, payload.toString());
+		//   var currentDate = moment().format('x');
+    	//   var latency = parseInt(currentDate) - parseInt(payload.toString());
+    	//   console.log("Latency: " + latency + "ms");
+      });
+  }
 
 
 function parseAWSConfig(){
@@ -58,6 +107,34 @@ function parseJSON( input ) {
 	}
 }
 
+function sendEamil(text) {
+    // Not the movie transporter!
+    var transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'alicelovedrpepper@gmail.com', // Your email id
+            pass: 'Rootbeer0816!' // Your password
+        }
+    });
+
+    //var text = currentDate + '\n\n';
+
+    var mailOptions = {
+        from: 'alicelovedrpepper@gmail.com', // sender address
+        to: 'drtailor1995@gmail.com', // list of receivers
+        subject: 'IoT Email Alert', // Subject line
+        text: text //, // plaintext body
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+            console.log(error);
+        }else{
+            console.log('Message sent: ' + info.response);
+        };
+    });
+}
+
 function mongodbHandler(msgContent){
 	var MongoClient = require('mongodb').MongoClient;
 	// Connect to the db
@@ -81,11 +158,6 @@ function mongodbHandler(msgContent){
 		});
 		//console.log("DEBUG: " + JSON.stringify(entry));
 	});
-}
-
-function storeMsg(data){
-	msg = data.Message;
-	mongodbHandler(msg);
 }
 
 function dummyMongodbHandler(msgContent){
@@ -130,6 +202,40 @@ function handleIncomingMessage( msgType, msgData ) {
 
 	} else if( msgType === 'Notification' ) {
     	dummyMessageInserter();
+	} else {
+		console.log( msgData);
+		//publish the message if ncessary
+		//the msg should be a led light command
+		device.publish('ledData', JSON.stringify({
+         ledLight: "on"
+      	}));
+      	//we may also want to send an email to notify the user that something is going on.
+      	var text = "IoT Email Alert! \n\n";
+      	sendEamil(text);
+	}
+}
+
+function createHttpServer() {
+	var server = new http.Server();
+
+	server.on( 'request', function( request, response ){
+		var msgBody = '';
+		request.setEncoding( 'utf8' );
+
+		request.on( 'data', function( data ){ 
+			msgBody += data;
+		});
+		request.on( 'end', function(){
+			var msgData = parseJSON( msgBody );
+			var msgType = request.headers[ 'x-amz-sns-message-type' ];
+			handleIncomingMessage( msgType, msgData );
+		});
+		response.end( 'OK' );
+	});
+	server.listen( 6001, subscribeToSnS );
+}
+
+
 
     	// var currentDate = moment().format('x');
     	// var latency = parseInt(currentDate) - parseInt(msgData.Message);
@@ -143,34 +249,3 @@ function handleIncomingMessage( msgType, msgData ) {
     	// 	data[data.length] = latency;
     	// }
     	// messageReceived++;
-
-	} else {
-		console.log( msgData);
-	}
-}
-
-
-function createHttpServer() {
-	var server = new http.Server();
-
-	server.on( 'request', function( request, response ){
-
-		var msgBody = '';
-
-		request.setEncoding( 'utf8' );
-
-		request.on( 'data', function( data ){ 
-			msgBody += data;
-		});
-
-		request.on( 'end', function(){
-			var msgData = parseJSON( msgBody );
-			var msgType = request.headers[ 'x-amz-sns-message-type' ];
-			handleIncomingMessage( msgType, msgData );
-		});
-
-		response.end( 'OK' );
-	});
-
-	server.listen( 6001, subscribeToSnS );
-}
