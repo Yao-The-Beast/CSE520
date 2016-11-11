@@ -28,7 +28,7 @@ var data = [];
 
 
 handleIoTDevice();
-//createHttpServer();
+createHttpServer();
 
 
 function handleIoTDevice(){
