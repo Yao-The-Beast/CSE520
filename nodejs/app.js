@@ -107,7 +107,7 @@ function parseJSON( input ) {
 	}
 }
 
-function sendEamil(text) {
+function sendEmail(text) {
     // Not the movie transporter!
     var transporter = nodemailer.createTransport({
         service: 'Gmail',
@@ -210,8 +210,8 @@ function handleIncomingMessage( msgType, msgData ) {
          ledLight: "on"
       	}));
       	//we may also want to send an email to notify the user that something is going on.
-      	var text = "IoT Email Alert! \n\n";
-      	sendEamil(text);
+      	//var text = "IoT Email Alert! \n\n";
+      	//sendEmail(text);
 	}
 }
 

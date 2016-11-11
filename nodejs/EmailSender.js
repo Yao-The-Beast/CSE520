@@ -12,7 +12,7 @@ function handleSayHello() {
         service: 'Gmail',
         auth: {
             user: 'alicelovedrpepper@gmail.com', // Your email id
-            pass: 'Drtailor1995!' // Your password
+            pass: 'Rootbeer0816!' // Your password
         }
     });
 
