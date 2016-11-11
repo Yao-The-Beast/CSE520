@@ -62,6 +62,8 @@ function handleIoTDevice(){
   }
 
 
+
+
 function parseAWSConfig(){
 	var configuration = JSON.parse(fs.readFileSync('credential.json', 'utf8'));
 	var data = configuration.Credentials;
@@ -113,7 +115,7 @@ function sendEmail(text) {
         service: 'Gmail',
         auth: {
             user: 'alicelovedrpepper@gmail.com', // Your email id
-            pass: 'Rootbeer0816!' // Your password
+            pass: 'shit' // Your password
         }
     });
 
@@ -222,7 +224,7 @@ function createHttpServer() {
 	server.on( 'request', function( request, response ){
 		var msgBody = '';
 		request.setEncoding( 'utf8' );
-
+		console.log("shit");
 		request.on( 'data', function( data ){ 
 			msgBody += data;
 		});
