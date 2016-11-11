@@ -57,7 +57,7 @@ void iot_subscribe_callback_handler(AWS_IoT_Client *pClient, char *topicName, ui
 	IOT_UNUSED(pData);
 	IOT_UNUSED(pClient);
 	// IOT_INFO("Subscribe callback");
-	// IOT_INFO("%.*s\t%.*s", topicNameLen, topicName, (int) params->payloadLen, params->payload);
+	IOT_INFO("%.*s\t%.*s", topicNameLen, topicName, (int) params->payloadLen, params->payload);
 	std::string currentTime = getCurrentTime();
 	char* payload = (char*) params->payload;
 	int payloadLen = (int)params->payloadLen;
@@ -215,7 +215,9 @@ int main(int argc, char **argv) {
 	}
 
 	IOT_INFO("Subscribing...");
-	rc = aws_iot_mqtt_subscribe(&client, "ledData",11, QOS0, iot_subscribe_callback_handler, NULL);
+	rc = aws_iot_mqtt_subscribe(&client, "ledData",7, QOS0, iot_subscribe_callback_handler, NULL);
+	rc = aws_iot_mqtt_subscribe(&client, "sensorData",10, QOS0, iot_subscribe_callback_handler, NULL);
+	rc = aws_iot_mqtt_subscribe(&client, "latencyTest",11, QOS0, iot_subscribe_callback_handler, NULL);
 	if(SUCCESS != rc) {
 		IOT_ERROR("Error subscribing : %d ", rc);
 		return rc;
@@ -229,7 +231,7 @@ int main(int argc, char **argv) {
 
 		//Max time the yield function will wait for read messages
 		//wait for messages or ping the serve to claim healthy
-		rc = aws_iot_mqtt_yield(&client, 500);
+		rc = aws_iot_mqtt_yield(&client, 200);
 		
 		if(NETWORK_ATTEMPTING_RECONNECT == rc) {
 			// If the client is attempting to reconnect we will skip the rest of the loop.
@@ -246,7 +248,7 @@ int main(int argc, char **argv) {
 			paramsQOS1.isRetained = 0;
 			paramsQOS1.payloadLen = strlen(cPayload);
 			rc = aws_iot_mqtt_publish(&client, "sensorData", 11, &paramsQOS1);
-			usleep(3000);
+			sleep(3);
 		} while(MQTT_REQUEST_TIMEOUT_ERROR == rc && (publishCount > 0 || infinitePublishFlag));
 	}
 
