@@ -224,7 +224,6 @@ function createHttpServer() {
 	server.on( 'request', function( request, response ){
 		var msgBody = '';
 		request.setEncoding( 'utf8' );
-		console.log("shit");
 		request.on( 'data', function( data ){ 
 			msgBody += data;
 		});

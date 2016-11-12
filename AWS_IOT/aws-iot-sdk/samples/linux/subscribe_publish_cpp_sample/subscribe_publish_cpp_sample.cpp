@@ -217,8 +217,8 @@ int main(int argc, char **argv) {
 
 	IOT_INFO("Subscribing...");
 	rc = aws_iot_mqtt_subscribe(&client, "ledData",7, QOS0, iot_subscribe_callback_handler, NULL);
-	rc = aws_iot_mqtt_subscribe(&client, "sensorData",10, QOS0, iot_subscribe_callback_handler, NULL);
-	rc = aws_iot_mqtt_subscribe(&client, "latencyTest",11, QOS0, iot_subscribe_callback_handler, NULL);
+	//rc = aws_iot_mqtt_subscribe(&client, "sensorData",10, QOS0, iot_subscribe_callback_handler, NULL);
+	//rc = aws_iot_mqtt_subscribe(&client, "latencyTest",11, QOS0, iot_subscribe_callback_handler, NULL);
 	if(SUCCESS != rc) {
 		IOT_ERROR("Error subscribing : %d ", rc);
 		return rc;
