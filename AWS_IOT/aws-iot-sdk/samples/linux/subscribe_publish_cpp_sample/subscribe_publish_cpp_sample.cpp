@@ -1,30 +1,3 @@
-/*
- * Copyright 2010-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License.
- * A copy of the License is located at
- *
- *  http://aws.amazon.com/apache2.0
- *
- * or in the "license" file accompanying this file. This file is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
- */
-
-/**
- * @file subscribe_publish_cpp_sample.cpp
- * @brief simple MQTT publish and subscribe on the same topic in C++
- *
- * This example takes the parameters from the aws_iot_config.h file and establishes a connection to the AWS IoT MQTT Platform.
- * It subscribes and publishes to the same topic - "sdkTest/sub"
- *
- * If all the certs are correct, you should see the messages received by the application in a loop.
- *
- * The application takes in the certificate path, host name , port and the number of times the publish should happen.
- *
- */
 #include <string>
 #include <stdio.h>
 #include <stdlib.h>
@@ -217,7 +190,7 @@ int main(int argc, char **argv) {
 
 	IOT_INFO("Subscribing...");
 	rc = aws_iot_mqtt_subscribe(&client, "ledData",7, QOS0, iot_subscribe_callback_handler, NULL);
-	//rc = aws_iot_mqtt_subscribe(&client, "sensorData",10, QOS0, iot_subscribe_callback_handler, NULL);
+	rc = aws_iot_mqtt_subscribe(&client, "sensorData",10, QOS0, iot_subscribe_callback_handler, NULL);
 	//rc = aws_iot_mqtt_subscribe(&client, "latencyTest",11, QOS0, iot_subscribe_callback_handler, NULL);
 	if(SUCCESS != rc) {
 		IOT_ERROR("Error subscribing : %d ", rc);
