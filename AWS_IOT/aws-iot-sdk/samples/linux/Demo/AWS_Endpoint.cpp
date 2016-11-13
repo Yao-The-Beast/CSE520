@@ -20,14 +20,6 @@
 #include "aws_iot_mqtt_client_interface.h"
 #include "sensor.h"
 
-int set_opt(int fd,int nSpeed, int nBits, char nEvent, int nStop);
-int open_port(int fd,int comport);
-std::string get_data(void);
-void uart_init(void);
-void uart_write(unsigned char* buff);
-void send_onedata(int value);
-void alarm(int variable,int value);
-
 char certDirectory[PATH_MAX + 1] = "../../../certs";
 char HostAddress[255] = AWS_IOT_MQTT_HOST;
 uint32_t port = AWS_IOT_MQTT_PORT;
