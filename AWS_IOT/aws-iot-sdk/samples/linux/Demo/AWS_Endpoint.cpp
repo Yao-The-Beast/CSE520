@@ -123,6 +123,10 @@ void parseInputArgsForConnectParams(int argc, char **argv) {
 
 
 int main(int argc, char **argv) {
+
+	/* initialize sensors */
+	uart_init();
+
 	bool infinitePublishFlag = true;
 
 	char rootCA[PATH_MAX + 1];
