@@ -278,9 +278,9 @@ std::string get_data(void){
                                 temperature= buff_read1[4] | (buff_read1[5] <<8);
                                 humidity = buff_read1[3];
                                 light = buff_read1[6] | (buff_read1[7] << 8) | (buff_read1[8] << 16 ) | (buff_read1[9] << 24);
-                                printf("humidity   : %d\n", humidity);
-                                printf("temperature   : %.1f\n", temperature*0.1);
-                                printf("light   : %.1f\n", light*0.0083);	
+                                // printf("humidity   : %d\n", humidity);
+                                // printf("temperature   : %.1f\n", temperature*0.1);
+                                // printf("light   : %.1f\n", light*0.0083);	
                                 outputString += "humidity:"+std::to_string(humidity);
                                 outputString += "temperature:"+std::to_string(temperature);
                                 outputString += "light:"+std::to_string(light);
