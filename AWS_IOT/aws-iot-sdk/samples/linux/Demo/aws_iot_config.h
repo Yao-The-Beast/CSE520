@@ -1,22 +1,13 @@
-/*
- * Copyright 2010-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License.
- * A copy of the License is located at
- *
- *  http://aws.amazon.com/apache2.0
- *
- * or in the "license" file accompanying this file. This file is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
- */
-
-/**
- * @file aws_iot_config.h
- * @brief AWS IoT specific configuration file
- */
+#include <stdio.h>
+#include <string.h>
+#include <sys/types.h>
+#include <errno.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <termios.h>
+#include <stdlib.h>
+#include <string>
 
 #ifndef SRC_SHADOW_IOT_SHADOW_CONFIG_H_
 #define SRC_SHADOW_IOT_SHADOW_CONFIG_H_
@@ -52,5 +43,14 @@
 // Auto Reconnect specific config
 #define AWS_IOT_MQTT_MIN_RECONNECT_WAIT_INTERVAL 1000 ///< Minimum time before the First reconnect attempt is made as part of the exponential back-off algorithm
 #define AWS_IOT_MQTT_MAX_RECONNECT_WAIT_INTERVAL 128000 ///< Maximum time interval after which exponential back-off will stop attempting to reconnect.
+
+int set_opt(int fd,int nSpeed, int nBits, char nEvent, int nStop);
+int open_port(int fd,int comport);
+std::string get_data(void);
+void uart_init(void);
+void uart_write(unsigned char* buff);
+void send_onedata(int value);
+void alarm(int variable,int value);
+
 
 #endif /* SRC_SHADOW_IOT_SHADOW_CONFIG_H_ */
