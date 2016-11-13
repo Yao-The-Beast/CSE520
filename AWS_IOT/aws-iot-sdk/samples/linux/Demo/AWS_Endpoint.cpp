@@ -227,7 +227,7 @@ int main(int argc, char **argv) {
 
 			/***** call the sensor function to get data *****/
 			std::cout << "Fetch Sensor" << std::endl;
-			std::string sensorData = get_data();
+			std::string sensorData = "shit";
 			std::cout << "BEGIN PUBLISH" << std::endl;
 			std::cout << sensorData << std::endl;
 		    strcpy(cPayload,sensorData.c_str());
