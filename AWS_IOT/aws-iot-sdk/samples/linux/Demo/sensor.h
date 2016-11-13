@@ -281,9 +281,9 @@ std::string get_data(void){
                                 // printf("humidity   : %d\n", humidity);
                                 // printf("temperature   : %.1f\n", temperature*0.1);
                                 // printf("light   : %.1f\n", light*0.0083);	
-                                outputString += "humidity:"+std::to_string(humidity);
-                                outputString += "temperature:"+std::to_string(temperature);
-                                outputString += "light:"+std::to_string(light);
+                                outputString += "humidity:"+std::to_string(humidity)+";";
+                                outputString += "temperature:"+std::to_string(temperature)+";";
+                                outputString += "light:"+std::to_string(light)+";";
                                 //return outputString;
                                 break;
                             }
