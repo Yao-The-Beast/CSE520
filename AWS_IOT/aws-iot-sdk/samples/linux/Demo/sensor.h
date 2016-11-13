@@ -244,71 +244,66 @@ std::string get_data(void){
     nread=read(fd,buff_read,sizeof(buff_read));
    // printf("nread=%d,%s\n",nread,buff);
     //close(fd);
-    if(nread>0)
-    {          memcpy(buff_read1 + valid_length, buff_read, nread);
-               valid_length = valid_length + nread;
-               while (valid_length >= 11)
-               {
-                   for (i = 0; (buff_read1[i] != 0x10) && (i < valid_length); i++);
-                   if (i == valid_length)
-                   {
-				       valid_length = 0;
-				       break;
-			       }
-			       else
-			       {
-                       if (i > 0)
-                       {
-					       valid_length = valid_length - i;
-				           memmove(buff_read1, buff_read1 + i, valid_length);
-			           }
-			           
-			           if (valid_length >= 11)
-			           {
-					       if ((buff_read1[2] != ':') || (buff_read1[10] != '\0'))
-					       {
-					           valid_length--;
-				               memmove(buff_read1, buff_read1 + 1, valid_length);
-				               continue;
-						   }
-						   else
-						   {
-							   
-							   
-							   switch (buff_read1[1])
-							   {
-								   case 'd':
-								   {
-									   temperature= buff_read1[4] | (buff_read1[5] <<8);
-									   humidity = buff_read1[3];
-									   light = buff_read1[6] | (buff_read1[7] << 8) | (buff_read1[8] << 16 ) | (buff_read1[9] << 24);
-										printf("humidity   : %d\n", humidity);
-										printf("temperature   : %.1f\n", temperature*0.1);
-									    printf("light   : %.1f\n", light*0.0083);	
-                                        outputString += "humidity:"+std::to_string(humidity);
-                                        outputString += "temperature:"+std::to_string(temperature);
-                                        outputString += "light:"+std::to_string(light);
-                                        //return outputString;
-									   break;
-								   }
-								  
-								   default:
-								   {
-								       valid_length--;
-				                       memmove(buff_read1, buff_read1 + 1, valid_length);
-				                       continue;
-								   }
-							   }
-							   valid_length = valid_length - 8;
-							   if (valid_length != 0)
-							   {
-				                   memmove(buff_read1, buff_read1 + 8, valid_length);
-						       }
-						   }
-				       }
-		           }
-		       }
-		   }
-           std::cout << "END" << std::endl;
-           return outputString;
+    if(nread>0){
+        memcpy(buff_read1 + valid_length, buff_read, nread);
+        valid_length = valid_length + nread;
+        while (valid_length >= 11){
+            for (i = 0; (buff_read1[i] != 0x10) && (i < valid_length); i++);
+            if (i == valid_length){
+                valid_length = 0;
+                break;
+            }
+            else{
+                if (i > 0){
+                    valid_length = valid_length - i;
+                    memmove(buff_read1, buff_read1 + i, valid_length);
+                }
+                
+                if (valid_length >= 11)
+                {
+                    if ((buff_read1[2] != ':') || (buff_read1[10] != '\0'))
+                    {
+                        valid_length--;
+                        memmove(buff_read1, buff_read1 + 1, valid_length);
+                        continue;
+                    }
+                    else
+                    {
+                        
+                        
+                        switch (buff_read1[1])
+                        {
+                            case 'd':
+                            {
+                                temperature= buff_read1[4] | (buff_read1[5] <<8);
+                                humidity = buff_read1[3];
+                                light = buff_read1[6] | (buff_read1[7] << 8) | (buff_read1[8] << 16 ) | (buff_read1[9] << 24);
+                                printf("humidity   : %d\n", humidity);
+                                printf("temperature   : %.1f\n", temperature*0.1);
+                                printf("light   : %.1f\n", light*0.0083);	
+                                outputString += "humidity:"+std::to_string(humidity);
+                                outputString += "temperature:"+std::to_string(temperature);
+                                outputString += "light:"+std::to_string(light);
+                                //return outputString;
+                                break;
+                            }
+                            
+                            default:
+                            {
+                                valid_length--;
+                                memmove(buff_read1, buff_read1 + 1, valid_length);
+                                continue;
+                            }
+                        }
+                        valid_length = valid_length - 8;
+                        if (valid_length != 0)
+                        {
+                            memmove(buff_read1, buff_read1 + 8, valid_length);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return outputString;
 }

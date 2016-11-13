@@ -230,9 +230,11 @@ int main(int argc, char **argv) {
 		    // std::string sensorData = getCurrentTime();
 
 			/***** call the sensor function to get data *****/
-			std::cout << "Fetch Sensor" << std::endl;
 			std::string sensorData = get_data();
-			std::cout << "DATA:" << sensorData << std::endl;
+			if (sensorData == ""){
+				sleep(2);
+				continue;
+			}
 		    strcpy(cPayload,sensorData.c_str());
 			paramsQOS1.qos = QOS1;
 			paramsQOS1.payload = (void *) cPayload;
