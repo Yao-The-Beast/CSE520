@@ -30,6 +30,8 @@ var data = [];
 handleIoTDevice();
 createHttpServer();
 
+// var data = parseMessage("H:123;Q:345;F:456;");
+// mongodbHandler(data);
 
 function handleIoTDevice(){
 	device
@@ -145,10 +147,16 @@ function mongodbHandler(msgContent){
 			return console.dir(err); 
 		}
 		var dataCollection = db.collection('sensorData');
+		
+		var humidity = parseInt(msgContent[0]);
+		var temperature = parseInt(msgContent[1]);
+		var light = parseInt(msgContent[2]);
+		
 		var entry = [
 			{
-				'type':'temperature',
-				'data':msgContent,
+				'type': "humidity",
+                'name':'sensor1',
+				'data': humidity,
 				'timestamp': (new Date()),
 			},
 		];
@@ -158,7 +166,7 @@ function mongodbHandler(msgContent){
 				return console.dir(err);
 			}
 		});
-		//console.log("DEBUG: " + JSON.stringify(entry));
+		console.log("DEBUG: " + JSON.stringify(entry));
 	});
 }
 
@@ -203,8 +211,13 @@ function handleIncomingMessage( msgType, msgData ) {
 		}, onAwsResponse );
 
 	} else if( msgType === 'Notification' ) {
-		console.log("GET Notification");
-    	dummyMessageInserter();
+		//console.log("GET Notification");
+		//dummyMessageInserter();
+		
+		//for real sensors
+		var sensorData = parseMessage(msgData);
+		mongodbHandler(sensorData);
+    	
 	} else {
 		console.log( msgData);
 		//publish the message if ncessary
@@ -235,6 +248,20 @@ function createHttpServer() {
 		response.end( 'OK' );
 	});
 	server.listen( 6001, subscribeToSnS );
+}
+
+function parseMessage(msg){
+	var parts = msg.split(";");
+	var humidityString = parts[0];
+	var temperature = parts[1];
+	var light = parts[2];
+
+	var humidity_ = parts[0].split(":");
+	var temperature_ = parts[0].split(":");
+	var light_ = parts[0].split(":");
+
+	var data = [humidity_[1], temperature_[1], light_[1]];
+	return data;
 }
 
 
