@@ -309,5 +309,6 @@ std::string get_data(void){
 		           }
 		       }
 		   }
+           std::cout << "END" << std::endl;
            return outputString;
 }
