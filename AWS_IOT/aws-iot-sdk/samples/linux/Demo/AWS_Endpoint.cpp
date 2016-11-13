@@ -45,7 +45,7 @@ void iot_subscribe_callback_handler(AWS_IoT_Client *pClient, char *topicName, ui
 	IOT_UNUSED(pData);
 	IOT_UNUSED(pClient);
 	// IOT_INFO("Subscribe callback");
-	//IOT_INFO("%.*s\t%.*s", topicNameLen, topicName, (int) params->payloadLen, params->payload);
+	IOT_INFO("%.*s\t%.*s", topicNameLen, topicName, (int) params->payloadLen, params->payload);
 	std::string currentTime = getCurrentTime();
 	char* payload = (char*) params->payload;
 	int payloadLen = (int)params->payloadLen;
@@ -56,7 +56,7 @@ void iot_subscribe_callback_handler(AWS_IoT_Client *pClient, char *topicName, ui
 		long int sentTime = std::stol(data,nullptr,10);
 		long int currentTime = std::stol(getCurrentTime(),nullptr,10);
 		long int latency = currentTime - sentTime;
-		std::cout << latency << std::endl;
+		//std::cout << latency << std::endl;
 		std::cout << "Topic:" << topic << ";Data: " << data << std::endl;
 	}else if (topic.compare("sensorData") == 0){
 		std::cout << "Topic:" << topic << ";Data: " << data << std::endl;
