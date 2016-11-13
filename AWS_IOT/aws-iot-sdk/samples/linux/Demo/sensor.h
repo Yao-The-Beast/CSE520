@@ -288,8 +288,8 @@ std::string get_data(void){
                                         outputString += "humidity:"+std::to_string(humidity);
                                         outputString += "temperature:"+std::to_string(temperature);
                                         outputString += "light:"+std::to_string(light);
-                                        return outputString;
-									   //break;
+                                        //return outputString;
+									   break;
 								   }
 								  
 								   default:
