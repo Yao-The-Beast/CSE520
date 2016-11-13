@@ -215,11 +215,11 @@ function handleIncomingMessage( msgType, msgData ) {
 		//dummyMessageInserter();
 		
 		//for real sensors
-		var sensorData = parseMessage(msgData);
+		var sensorData = parseMessage(msgData.data);
 		mongodbHandler(sensorData);
     	
 	} else {
-		console.log( msgData);
+		console.log( msgData.data);
 		//publish the message if ncessary
 		//the msg should be a led light command
 		device.publish('ledData', JSON.stringify({
