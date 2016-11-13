@@ -219,6 +219,7 @@ int main(int argc, char **argv) {
 			continue;
 		}
 
+		std::cout << "WHILE" << std::endl;
 		do {
 			//yao
 		    //set payload
@@ -227,7 +228,7 @@ int main(int argc, char **argv) {
 
 			/***** call the sensor function to get data *****/
 			std::cout << "Fetch Sensor" << std::endl;
-			std::string sensorData = "shit";
+			std::string sensorData = get_data();
 			std::cout << "BEGIN PUBLISH" << std::endl;
 			std::cout << sensorData << std::endl;
 		    strcpy(cPayload,sensorData.c_str());
