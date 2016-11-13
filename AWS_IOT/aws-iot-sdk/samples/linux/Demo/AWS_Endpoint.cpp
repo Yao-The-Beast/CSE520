@@ -49,11 +49,11 @@ void iot_subscribe_callback_handler(AWS_IoT_Client *pClient, char *topicName, ui
 		long int currentTime = std::stol(getCurrentTime(),nullptr,10);
 		long int latency = currentTime - sentTime;
 		//std::cout << latency << std::endl;
-		std::cout << "Topic:" << topic << ";Data: " << data << std::endl;
+		std::cout << "Topic:" << topic << "  " << data << std::endl;
 	}else if (topic.compare("sensorData") == 0){
-		std::cout << "Topic:" << topic << ";Data: " << data << std::endl;
+		std::cout << "Topic:" << topic << "  " << data << std::endl;
 	}else if (topic.compare("ledData") == 0){
-		std::cout << "Topic:" << topic << ";Data: " << data << std::endl;
+		std::cout << "Topic:" << topic << "  " << data << std::endl;
 	}else{
 
 	}
