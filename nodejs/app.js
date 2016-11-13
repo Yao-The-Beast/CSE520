@@ -215,8 +215,7 @@ function handleIncomingMessage( msgType, msgData ) {
 		//dummyMessageInserter();
 		
 		//for real sensors
-		console.log(msgData);
-		var sensorData = parseMessage(msgData.data);
+		var sensorData = parseMessage(msgData.Message);
 		mongodbHandler(sensorData);
     	
 	} else {
