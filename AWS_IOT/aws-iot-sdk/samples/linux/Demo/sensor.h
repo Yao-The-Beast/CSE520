@@ -8,6 +8,7 @@
 #include <termios.h>
 #include <stdlib.h>
 #include <string>
+#include <iostream>
 
 int fd;
 int on_off=0;
@@ -232,6 +233,7 @@ void alarm(int variable, int value){
 }
 
 std::string get_data(void){
+    std::cout << "HERE WE GO" << std::endl;
 	send_onedata('D');
 	usleep(10000);
 	int nread,i; 
