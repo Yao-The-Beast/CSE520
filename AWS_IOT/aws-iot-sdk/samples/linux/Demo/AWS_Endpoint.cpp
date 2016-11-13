@@ -235,7 +235,8 @@ int main(int argc, char **argv) {
 
 			/***** call the sensor function to get data *****/
 			std::string sensorData = get_data();
-
+			std::cout << "PUBLISH" << std::endl;
+			std::cout << sensorData << std::endl;
 		    strcpy(cPayload,sensorData.c_str());
 			paramsQOS1.qos = QOS1;
 			paramsQOS1.payload = (void *) cPayload;
