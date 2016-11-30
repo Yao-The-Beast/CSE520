@@ -153,25 +153,23 @@ function mongodbHandler(msgContent){
 		var light = parseInt(msgContent[2]);
 
 		console.log(humidity);
-		if (humidity == NaN || temperature == NaN || temperature == NaN){
-			return;
-		}
-		
-		var entry = [
-			{
-				'type': "humidity",
-                'name':'sensor1',
-				'data': humidity,
-				'timestamp': (new Date()),
-			},
-		];
+		if (humidity != NaN || temperature != NaN || temperature != NaN){
+			var entry = [
+				{
+					'type': "humidity",
+					'name':'sensor1',
+					'data': humidity,
+					'timestamp': (new Date()),
+				},
+			];
 
-		dataCollection.insert(entry, {w:1}, function(err, result){
-			if (err) {
-				return console.dir(err);
-			}
-		});
-		console.log("DEBUG: " + JSON.stringify(entry));
+			dataCollection.insert(entry, {w:1}, function(err, result){
+				if (err) {
+					return console.dir(err);
+				}
+			});
+			console.log("DEBUG: " + JSON.stringify(entry));
+		}
 	});
 }
 
@@ -224,7 +222,6 @@ function handleIncomingMessage( msgType, msgData ) {
 		mongodbHandler(sensorData);
     	
 	} else {
-		console.log( msgData.data);
 		//publish the message if ncessary
 		//the msg should be a led light command
 		device.publish('ledData', JSON.stringify({
