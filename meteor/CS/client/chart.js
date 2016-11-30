@@ -62,7 +62,7 @@ Template.chart.onRendered(function () {
                         enabled: false
                     },
                      series: [{
-                            name: 'Temperature',
+                            name: 'Humidity',
                             data: seriesData
                     }],
                 });
