@@ -153,7 +153,7 @@ function mongodbHandler(msgContent){
 		var light = parseInt(msgContent[2]);
 
 		console.log("Humidity:" + humidity);
-		if (isNaN(parseFloat(humidity))){
+		if (!isNaN(parseFloat(humidity))){
 			var entry = [
 				{
 					'type': "humidity",
