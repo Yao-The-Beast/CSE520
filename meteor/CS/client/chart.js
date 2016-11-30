@@ -33,7 +33,7 @@ Template.chart.onRendered(function () {
                         marginRight: 10,
                     },
                     title: {
-                        text: 'Live Sensor Data'
+                        text: 'Live Humidity Data'
                     },
                     xAxis: {
                         type: 'datetime',
@@ -52,7 +52,7 @@ Template.chart.onRendered(function () {
                     tooltip: {
                         formatter: function () {
                             return '<b>' + 'Time:</b> ' + Highcharts.dateFormat('%m/%d %H:%M:%S', this.x) + '<br/>' +
-                                   '<b>' + this.series.name + ':</b> ' + Highcharts.numberFormat(this.y, 2) + '</b><br/>';
+                                   '<b>' + this.series.name + ':</b> ' + Highcharts.numberFormat(this.y, 2) + '%' +'</b><br/>';
                         }
                     },
                     legend: {
@@ -72,7 +72,8 @@ Template.chart.onRendered(function () {
                 added: function (id, doc) {
                     if (!initializing) {
                         var y = doc.data;
-                        var x = doc.timestamp.getTime()
+                        var x = doc.timestamp.getTime();
+                        console.log(x);
                         liveChart.series[0].addPoint([x,y]);
                         
                         if (liveChart.series[0].points.length > 20){
