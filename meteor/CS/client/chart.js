@@ -72,12 +72,14 @@ Template.chart.onRendered(function () {
                 added: function (id, doc) {
                     if (!initializing) {
                         var y = doc.data;
-                        var d = new Date();
-                        var x = doc.timestamp.getTime() - 60 * 1000 * 60 * 6;
-                        liveChart.series[0].addPoint([x,y]);
-                        
-                        if (liveChart.series[0].points.length > 20){
-                            liveChart.series[0].data[0].remove();
+                        if (y != null || y != "") {
+                            var d = new Date();
+                            var x = doc.timestamp.getTime() - 60 * 1000 * 60 * 6;
+                            liveChart.series[0].addPoint([x,y]);
+                            
+                            if (liveChart.series[0].points.length > 20){
+                                liveChart.series[0].data[0].remove();
+                            }
                         }
                     }
                 },
