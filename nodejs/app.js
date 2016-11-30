@@ -152,7 +152,7 @@ function mongodbHandler(msgContent){
 		var temperature = parseInt(msgContent[1]);
 		var light = parseInt(msgContent[2]);
 
-		console.log(humidity);
+		console.log("Humidity:" + humidity);
 		if (humidity != NaN || temperature != NaN || temperature != NaN){
 			var entry = [
 				{
