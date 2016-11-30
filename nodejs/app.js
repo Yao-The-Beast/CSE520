@@ -151,6 +151,10 @@ function mongodbHandler(msgContent){
 		var humidity = parseInt(msgContent[0]);
 		var temperature = parseInt(msgContent[1]);
 		var light = parseInt(msgContent[2]);
+
+		if (humidity == null || humidity == "" || humidity == " "){
+			return;
+		}
 		
 		var entry = [
 			{
