@@ -75,7 +75,7 @@ Template.chart.onRendered(function () {
                         var d = new Date();
                         //var x = doc.timestamp.getTime();
                         d.setHours(d.getHours() - 6);
-                        var x = doc.timestamp.getTime();
+                        var x = doc.timestamp.getTime() - 60 * 1000 * 60 * 8;
                         liveChart.series[0].addPoint([x,y]);
                         
                         if (liveChart.series[0].points.length > 20){
