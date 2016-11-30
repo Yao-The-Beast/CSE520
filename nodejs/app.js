@@ -152,7 +152,7 @@ function mongodbHandler(msgContent){
 		var temperature = parseInt(msgContent[1]);
 		var light = parseInt(msgContent[2]);
 
-		if (humidity == undefined || humidity == null || humidity == "" || humidity == " "){
+		if (humidity === undefined || humidity == null || humidity === null || humidity == "" || humidity == " "){
 			return;
 		}
 		
